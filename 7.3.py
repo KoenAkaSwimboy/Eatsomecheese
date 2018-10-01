@@ -1,34 +1,31 @@
-afstandKM = int(input( 'Hoeveel kilometer gaat u reizen:'))
-leeftijd = int(input('Hoe oud bent u:'))
-dag = input('Reist u doordeweeks of in het weekend:')
-
-
 def standaardprijs(afstandKM):
 
-    if afstandKM < 0:
-        return (0)
+    if 0 < afstandKM < 50:
+        return afstandKM * 0.80
 
-    elif afstandKM <= 50:
-        return(0.8 * afstandKM)
+    elif afstandKM > 50:
+        return ((afstandKM - 50) * 0.60) + 15
 
-
-
-    else:
-        return(afstandKM * 0.6 + 15)
+    elif afstandKM <= 0:
+        return 0
 
 
-def ritprijs(afstandKM, leeftijd, dag):
-    if (leeftijd <= 12 or leeftijd >= 65) and (dag == 'weekend'):
-        return(standaardprijs(afstandKM)) * 0.65
+def ritprijs(leeftijd, weekendrit, afstandKM):
 
-    elif (leeftijd <= 12 or leeftijd >= 65) and (dag != 'weekend'):
-         return(standaardprijs(afstandKM)) * 0.70
+    if leeftijd > 150 or leeftijd < 0:
+        return "De ingevoerde leeftijd is ongeldig."
 
-    elif (leeftijd >= 12 or leeftijd <= 65) and (dag == 'weekend'):
-        return(standaardprijs(afstandKM)) * 0.60
-    else:
-        return(standaardprijs(afstandKM))
+    elif leeftijd < 12 or leeftijd >= 65 and weekendrit == True:
+        return standaardprijs(afstandKM) * 0.65
+
+    elif leeftijd < 12 or leeftijd >= 65 and weekendrit == False:
+        return standaardprijs(afstandKM) * 0.70
+
+    elif 12 <= leeftijd < 65 and weekendrit == True:
+        return standaardprijs(afstandKM) * 0.60
+
+    elif 12 <= leeftijd < 65 and weekendrit == False:
+        return standaardprijs(afstandKM)
 
 
-
-print('€', round(ritprijs(afstandKM, leeftijd, dag), 2))
+print(ritprijs(20, False, 11))
