@@ -3,7 +3,7 @@ def standaardprijs(afstandKM):
     if 0 < afstandKM < 50:
         return afstandKM * 0.80
 
-    elif afstandKM > 50:
+    elif afstandKM >= 50:
         return ((afstandKM - 50) * 0.60) + 15
 
     elif afstandKM <= 0:
@@ -28,4 +28,4 @@ def ritprijs(leeftijd, weekendrit, afstandKM):
         return standaardprijs(afstandKM)
 
 
-print(ritprijs(20, False, 11))
+print(ritprijs(40, False, 50))
