@@ -1,16 +1,64 @@
-infile = open('kaartnummers.txt', 'r')
-regels = infile.readlines()
-for regel in regels:
-    zin = regel.split(' ')
+def toon_aantal_kluizen_vrij():
+    infile = open('kluizen.txt', 'r')
+    regels = infile.readlines()
+    vrij = 12 - len(regels)
+    return print('Er zijn', vrij, 'kluizen vrij')
 
-    nummer = zin[0]
-    nummer = nummer.strip(',')
+def nieuwe_kluis():
+    Kluizen = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    infile = open('kluizen.txt', 'r')
+    regels = infile.readlines()
+    for regel in regels:
+        zin = regel.split(';')
+        nummer = zin[0]
+        if nummer in Kluizen:
+         Kluizen.remove(nummer)
 
-    voornaam = zin[1]
+    if not Kluizen:
+          print('Er zijn geen kluizen meer beschikbaar, sorry')
+    else:
+          print('De kluizen', Kluizen, 'zijn nog vrij')
+          kluis = input('Kies een kluis:')
+          if kluis in Kluizen:
+                  wachtwoord = input('Kies een wachtwoord:')
+                  with open('kluizen.txt', 'a') as f:
+                    f.write('\n')
+                    f.write(kluis)
+                    f.write(';')
+                    f.write(wachtwoord)
+                  print('U heeft kluis', kluis, 'geclaimed.')
+          else:
+                  print('Geef geldig kluisnummer op')
 
-    achternaam = zin[2]
-    if len(zin) >3:
-        achternaam = achternaam + ' ' + zin[3]
-    achternaam = achternaam.strip('\n')
 
-    print(voornaam, achternaam, 'heeft klantnummer: ', nummer)
+def kluis_openen():
+    kluis = input('Geef kluisnummer en wachtwoord (kluisnummer;wachtwoord): ')
+    infile = open('kluizen.txt', 'r')
+    regels = infile.readlines()
+    for regel in regels:
+        zin = regel.split('\n')
+        nummer = zin[0]
+        if kluis == nummer:
+            print('Uw kluis is nu open')
+            break
+    else:
+        print('Kluisnummer of wachtwoord is onjuist')
+
+print('Menu:')
+print("1: Ik wil weten hoeveel kluizen nog vrij zijn")
+print("2: Ik wil een nieuwe kluis")
+print("3: Ik wil even iets uit mijn kluis halen")
+print("4: Ik wil stoppen")
+
+while True:
+        selection= input("Maak een keuze: ")
+        if selection == '1':
+            print(toon_aantal_kluizen_vrij())
+        elif selection == '2':
+            print(nieuwe_kluis())
+        elif selection == '3':
+            print(kluis_openen())
+        elif selection == '4':
+            break
+        else:
+            print('U heeft geen optie aan geklikt!')
